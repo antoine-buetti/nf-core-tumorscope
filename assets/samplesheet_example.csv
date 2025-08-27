@@ -1,0 +1,4 @@
+sample,tiff
+sample1,s3://your-bucket/microscopy_data/video1.tif
+sample2,s3://your-bucket/microscopy_data/video2.tif
+sample3,s3://your-bucket/microscopy_data/video3.tif
