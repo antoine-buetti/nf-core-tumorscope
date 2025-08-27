@@ -11,10 +11,10 @@ process CELLSEGMENTATION {
     tuple val(meta), path(tiff), path(tiff_mask)
 
     output:
-    tuple val(meta), path("${prefix}_predictions.tiff")           , emit: predictions
-    tuple val(meta), path("${prefix}_overlay_predictions.tiff")  , emit: overlays
-    tuple val(meta), path("${prefix}_masked_predictions.tiff")   , emit: masked_predictions
-    path "versions.yml"                                          , emit: versions
+    tuple val(meta), path("${meta.id}_predictions.tiff")           , emit: predictions
+    tuple val(meta), path("${meta.id}_overlay_predictions.tiff")  , emit: overlays
+    tuple val(meta), path("${meta.id}_masked_predictions.tiff")   , emit: masked_predictions
+    path "versions.yml"                                           , emit: versions
 
     when:
     task.ext.when == null || task.ext.when
