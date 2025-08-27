@@ -1,6 +1,6 @@
 process CELLSEGMENTATION {
     tag "$meta.id"
-///////////    label 'process_high'
+/   label 'process_high'
     label 'process_low'
 
     conda "${moduleDir}/environment.yml"
