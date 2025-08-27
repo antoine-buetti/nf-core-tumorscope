@@ -12,10 +12,10 @@ process CELLSEGMENTATION {
     tuple val(meta), path(tiff), path(tiff_mask)
 
     output:
-    tuple val(meta), path("predictions.tiff")           , emit: predictions
-    tuple val(meta), path("overlay_predictions.tiff")  , emit: overlays
-    tuple val(meta), path("masked_predictions.tiff")   , emit: masked_predictions
-    path "versions.yml"                                 , emit: versions
+    tuple val(meta), path("${prefix}_predictions.tiff")           , emit: predictions
+    tuple val(meta), path("${prefix}_overlay_predictions.tiff")  , emit: overlays
+    tuple val(meta), path("${prefix}_masked_predictions.tiff")   , emit: masked_predictions
+    path "versions.yml"                                          , emit: versions
 
     when:
     task.ext.when == null || task.ext.when
@@ -51,9 +51,9 @@ process CELLSEGMENTATION {
     def args = task.ext.args ?: ''
     def prefix = task.ext.prefix ?: "${meta.id}"
     """
-    touch predictions.tiff
-    touch overlay_predictions.tiff
-    touch masked_predictions.tiff
+    touch ${prefix}_predictions.tiff
+    touch ${prefix}_overlay_predictions.tiff
+    touch ${prefix}_masked_predictions.tiff
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
