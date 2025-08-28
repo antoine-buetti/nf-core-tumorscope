@@ -26,7 +26,8 @@ process CELLSEGMENTATION {
     def green_masking_thr = task.ext.green_masking_thr ?: 140
     def smallest_area_th = task.ext.smallest_area_th ?: 150
     """
-    cellsegmentation.py \\
+    chmod +x /usr/local/bin/cellsegmentation.py
+    /usr/local/bin/cellsegmentation.py \\
         --tiff ${tiff} \\
         --tiff_mask ${tiff_mask} \\
         --interval ${interval} \\
