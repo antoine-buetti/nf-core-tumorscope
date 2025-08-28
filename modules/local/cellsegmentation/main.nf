@@ -2,10 +2,6 @@ process CELLSEGMENTATION {
     tag "$meta.id"
     label 'process_high'
 
-    //conda "${moduleDir}/environment.yml"
-    //container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
-    //    'https://depot.galaxyproject.org/singularity/python:3.9--1' :
-    //    'biocontainers/python:3.9--1' }"
     conda "conda-forge::python=3.9 conda-forge::numpy conda-forge::opencv conda-forge::scikit-image conda-forge::imageio conda-forge::scipy conda-forge::scikit-learn conda-forge::tifffile conda-forge::tqdm"
 
     input:
