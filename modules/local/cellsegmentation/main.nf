@@ -30,10 +30,12 @@ process CELLSEGMENTATION {
     # Works on seqera anly locally:
     #chmod +x ${moduleDir}/../../../bin/cellsegmentation.py
     #${moduleDir}/../../../bin/cellsegmentation.py \\
-
     #chmod +x \$(which cellsegmentation.py)
+    #python ${projectDir}/bin/cellsegmentation.py \\
 
-    python ${projectDir}/bin/cellsegmentation.py \\
+    cp ${projectDir}/bin/cellsegmentation.py ./cellsegmentation.py
+    chmod +x ./cellsegmentation.py
+    python ./cellsegmentation.py \\   
         --tiff ${tiff} \\
         --tiff_mask ${tiff_mask} \\
         --interval ${interval} \\
