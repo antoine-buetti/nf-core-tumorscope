@@ -39,9 +39,11 @@ process CELLSEGMENTATION {
     #python ${moduleDir}/bin/cellsegmentation.py \\
     # senza dir solo file dopo aver spostato cellsegmentation.py in modules/local/cellsegmentation/
     python ${moduleDir}/cellsegmentation.py \\
-
     # senza dir solo file dopo aver spostato cellsegmentation.py in modules/local/cellsegmentation/
-    python cellsegmentation.py \\
+    #python cellsegmentation.py \\
+
+    chmod +x ${moduleDir}/cellsegmentation.py
+    python ${moduleDir}/cellsegmentation.py \\
         --tiff ${tiff} \\
         --tiff_mask ${tiff_mask} \\
         --interval ${interval} \\
