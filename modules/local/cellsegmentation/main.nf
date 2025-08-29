@@ -36,6 +36,7 @@ process CELLSEGMENTATION {
     #chmod +x ./cellsegmentation.py
     #python ./cellsegmentation.py \\   
 
+    # spostare bin in modules/local/cellsegmentation/
     python ${moduleDir}/bin/cellsegmentation.py \\
         --tiff ${tiff} \\
         --tiff_mask ${tiff_mask} \\
