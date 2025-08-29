@@ -45,8 +45,6 @@ process CELLSEGMENTATION {
 
 
     ls ${moduleDir} > merda.txt 
-    ls ${projectDir} >> merda.txt 
-    ls /usr/local/bin/ >> merda.txt 
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
