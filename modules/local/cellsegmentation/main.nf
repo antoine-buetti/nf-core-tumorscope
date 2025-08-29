@@ -35,9 +35,11 @@ process CELLSEGMENTATION {
     #cp ${projectDir}/bin/cellsegmentation.py ./cellsegmentation.py
     #chmod +x ./cellsegmentation.py
     #python ./cellsegmentation.py \\   
-
     # spostare bin in modules/local/cellsegmentation/
-    python ${moduleDir}/bin/cellsegmentation.py \\
+    #python ${moduleDir}/bin/cellsegmentation.py \\
+
+    # senza dir solo file
+    python ${moduleDir}/cellsegmentation.py \\
         --tiff ${tiff} \\
         --tiff_mask ${tiff_mask} \\
         --interval ${interval} \\
