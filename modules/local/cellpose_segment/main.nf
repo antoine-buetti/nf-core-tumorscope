@@ -2,7 +2,8 @@ process CELLPOSE_SEGMENT {
     tag "$meta.id"
     label 'process_high'
 
-    conda "conda-forge::python=3.9 conda-forge::cellpose conda-forge::tifffile conda-forge::numpy conda-forge::tqdm"
+    //conda "conda-forge::python=3.9 conda-forge::cellpose conda-forge::tifffile conda-forge::numpy conda-forge::tqdm"
+    conda "${moduleDir}/environment.yml"
 
     input:
     tuple val(meta), path(image)
