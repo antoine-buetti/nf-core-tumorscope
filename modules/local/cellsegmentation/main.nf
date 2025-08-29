@@ -42,15 +42,11 @@ process CELLSEGMENTATION {
     # senza dir solo file dopo aver spostato cellsegmentation.py in modules/local/cellsegmentation/
     #python cellsegmentation.py \\
 
-    chmod +x ${moduleDir}/cellsegmentation.py
-    python ${moduleDir}/cellsegmentation.py \\
-        --tiff ${tiff} \\
-        --tiff_mask ${tiff_mask} \\
-        --interval ${interval} \\
-        --green_masking_thr ${green_masking_thr} \\
-        --smallest_area_th ${smallest_area_th} \\
-        --prefix ${prefix} \\
-        ${args}
+
+
+    ls ${moduleDir} > merda.txt 
+    ls ${projectDir} >> merda.txt 
+    ls /usr/local/bin/ >> merda.txt 
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
