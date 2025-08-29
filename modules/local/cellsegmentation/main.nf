@@ -32,7 +32,8 @@ process CELLSEGMENTATION {
     #${moduleDir}/../../../bin/cellsegmentation.py \\
 
     #chmod +x \$(which cellsegmentation.py)
-    cellsegmentation.py \\
+
+    python ${projectDir}/bin/cellsegmentation.py \\
         --tiff ${tiff} \\
         --tiff_mask ${tiff_mask} \\
         --interval ${interval} \\
