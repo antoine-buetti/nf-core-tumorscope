@@ -27,11 +27,32 @@ process CELLSEGMENTATION {
     # Works on seqera platform but not locally:
     #chmod +x /usr/local/bin/cellsegmentation.py
     #/usr/local/bin/cellsegmentation.py \\
+
     # Works on seqera anly locally:
     #chmod +x ${moduleDir}/../../../bin/cellsegmentation.py
     #${moduleDir}/../../../bin/cellsegmentation.py \\
 
+    #chmod +x \$(which cellsegmentation.py)
 
+    #cellsegmentation.py \\
+
+    #python ${projectDir}/bin/cellsegmentation.py \\
+
+    #cp ${projectDir}/bin/cellsegmentation.py ./cellsegmentation.py
+    #chmod +x ./cellsegmentation.py
+    #python ./cellsegmentation.py \\
+
+    # spostare bin in modules/local/cellsegmentation/
+    #python ${moduleDir}/bin/cellsegmentation.py \\
+
+    # senza dir solo file dopo aver spostato cellsegmentation.py in modules/local/cellsegmentation/
+    #python ${moduleDir}/cellsegmentation.py \\
+
+    # senza dir solo file dopo aver spostato cellsegmentation.py in modules/local/cellsegmentation/
+    #python cellsegmentation.py \\
+
+    #chmod +x ${moduleDir}/cellsegmentation.py
+    #python ${moduleDir}/cellsegmentation.py \\
 
     # Works on seqera platform but not locally:
     chmod +x /usr/local/bin/cellsegmentation.py
