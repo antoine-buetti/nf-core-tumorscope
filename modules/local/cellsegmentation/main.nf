@@ -2,7 +2,8 @@ process CELLSEGMENTATION {
     tag "$meta.id"
     label 'process_high'
 
-    conda "conda-forge::python=3.9 conda-forge::numpy conda-forge::opencv conda-forge::scikit-image conda-forge::imageio conda-forge::scipy conda-forge::scikit-learn conda-forge::tifffile conda-forge::tqdm"
+    //conda "conda-forge::python=3.9 conda-forge::numpy conda-forge::opencv conda-forge::scikit-image conda-forge::imageio conda-forge::scipy conda-forge::scikit-learn conda-forge::tifffile conda-forge::tqdm"
+    conda "${moduleDir}/environment.yml"
 
     input:
     tuple val(meta), path(tiff), path(tiff_mask)
