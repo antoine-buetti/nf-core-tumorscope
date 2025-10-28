@@ -1,0 +1,80 @@
+// Nextflow configuration with profiles for Google Colab
+params {
+    max_cpus = 2
+    max_memory = '13.GB'
+}
+
+// Global process settings
+process {
+    cpus = 1
+    memory = '4.GB'
+
+    withLabel: 'process_high' {
+        cpus = 2
+        memory = '8.GB'
+    }
+
+    withLabel: 'process_gpu' {
+        cpus = 1
+        memory = '4.GB'
+        accelerator = 1
+    }
+
+    withName: 'YOUR_PROCESS_NAME' {
+        cpus = 1
+        memory = '4.GB'
+        accelerator = 1
+    }
+}
+
+// Resource limits
+executor {
+    cpus = 2
+    memory = '13.GB'
+}
+
+// Configuration profiles
+profiles {
+    conda {
+        conda.enabled = true
+        conda.useMamba = true
+        conda.createTimeout = '30 min'
+        conda.cacheDir = '/content/conda_cache'
+        conda.channels = ['conda-forge', 'bioconda', 'nvidia']
+
+        docker.enabled = false
+        singularity.enabled = false
+
+        process {
+            withLabel: 'process_gpu' {
+                containerOptions = ''  // No Docker options needed for conda
+            }
+        }
+    }
+
+    docker {
+        docker.enabled = true
+        docker.runOptions = '-u $(id -u):$(id -g)'
+
+        conda.enabled = false
+        singularity.enabled = false
+
+        process {
+            withLabel: 'process_gpu' {
+                containerOptions = '--gpus all -e NVIDIA_VISIBLE_DEVICES=all -e NVIDIA_DRIVER_CAPABILITIES=compute,utility'
+            }
+        }
+    }
+
+    standard {
+        // Default profile - no containers, just local execution
+        docker.enabled = false
+        conda.enabled = false
+        singularity.enabled = false
+    }
+}
+
+// Default profile if none specified
+if (!workflow.profile) {
+    workflow.profile = 'conda'
+}

@@ -1,0 +1,242 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://raw.githubusercontent.com/nf-core/tumorscope//nextflow_schema.json",
+    "title": "nf-core/tumorscope pipeline parameters",
+    "description": "Pipeline for microscopy video analysis with Cellpose segmentation",
+    "type": "object",
+    "$defs": {
+        "input_output_options": {
+            "title": "Input/output options",
+            "type": "object",
+            "fa_icon": "fas fa-terminal",
+            "description": "Define where the pipeline should find input data and save output data.",
+            "required": [
+                "input",
+                "outdir"
+            ],
+            "properties": {
+                "input": {
+                    "type": "string",
+                    "format": "file-path",
+                    "exists": true,
+                    "schema": "assets/schema_input.json",
+                    "mimetype": "text/csv",
+                    "pattern": "^\\S+\\.csv$",
+                    "description": "Path to comma-separated file containing information about the samples in the experiment.",
+                    "help_text": "You will need to create a design file with information about the samples in your experiment before running the pipeline. Use this parameter to specify its location. It has to be a comma-separated file with 3 columns, and a header row.",
+                    "fa_icon": "fas fa-file-csv"
+                },
+                "outdir": {
+                    "type": "string",
+                    "format": "directory-path",
+                    "description": "The output directory where the results will be saved. You have to use absolute paths to storage on Cloud infrastructure.",
+                    "fa_icon": "fas fa-folder-open"
+                }
+            }
+        },
+        "cellpose_options": {
+            "title": "Cellpose options",
+            "type": "object",
+            "description": "",
+            "default": "",
+            "properties": {
+                "diameter": {
+                    "type": "number",
+                    "hidden": true
+                },
+                "cellprob_threshold": {
+                    "type": "number",
+                    "hidden": true
+                },
+                "flow_threshold": {
+                    "type": "number",
+                    "hidden": true
+                },
+                "model_type": {
+                    "type": "string",
+                    "hidden": true
+                },
+                "gpu": {
+                    "type": "boolean",
+                    "hidden": true
+                }
+            }
+        },
+        "t_cells_segmentation": {
+            "title": "T Cells segmentation",
+            "type": "object",
+            "description": "",
+            "default": "",
+            "properties": {
+                "interval": {
+                    "type": "integer",
+                    "default": 10
+                },
+                "green_masking_thr": {
+                    "type": "integer",
+                    "default": 140
+                },
+                "smallest_area_th": {
+                    "type": "integer",
+                    "default": 150
+                },
+                "n_estimators": {
+                    "type": "integer",
+                    "default": 300
+                },
+                "max_depth": {
+                    "type": "integer",
+                    "default": 30
+                },
+                "max_samples": {
+                    "type": "number",
+                    "default": 0.5
+                }
+            }
+        },
+        "instance_labelling": {
+            "title": "Instance Labelling",
+            "type": "object",
+            "description": "",
+            "default": "",
+            "properties": {
+                "spot_sigma": {
+                    "type": "integer",
+                    "default": 1
+                },
+                "outline_sigma": {
+                    "type": "integer",
+                    "default": 1
+                },
+                "frame_index": {
+                    "type": "integer",
+                    "default": 1
+                }
+            }
+        }
+    },
+    "allOf": [
+        {
+            "$ref": "#/$defs/input_output_options"
+        },
+        {
+            "$ref": "#/$defs/cellpose_options"
+        },
+        {
+            "$ref": "#/$defs/t_cells_segmentation"
+        },
+        {
+            "$ref": "#/$defs/instance_labelling"
+        }
+    ],
+    "properties": {
+        "genome": {
+            "type": "string",
+            "hidden": true
+        },
+        "igenomes_base": {
+            "type": "string",
+            "default": "s3://ngi-igenomes/igenomes/",
+            "hidden": true
+        },
+        "igenomes_ignore": {
+            "type": "boolean",
+            "hidden": true
+        },
+        "multiqc_config": {
+            "type": "string",
+            "hidden": true
+        },
+        "multiqc_title": {
+            "type": "string",
+            "hidden": true
+        },
+        "multiqc_logo": {
+            "type": "string",
+            "hidden": true
+        },
+        "max_multiqc_email_size": {
+            "type": "string",
+            "default": "25.MB",
+            "hidden": true
+        },
+        "multiqc_methods_description": {
+            "type": "string",
+            "hidden": true
+        },
+        "publish_dir_mode": {
+            "type": "string",
+            "default": "copy",
+            "hidden": true
+        },
+        "email": {
+            "type": "string"
+        },
+        "email_on_fail": {
+            "type": "string",
+            "hidden": true
+        },
+        "plaintext_email": {
+            "type": "boolean",
+            "hidden": true
+        },
+        "monochrome_logs": {
+            "type": "boolean",
+            "hidden": true
+        },
+        "hook_url": {
+            "type": "string",
+            "hidden": true
+        },
+        "pipelines_testdata_base_path": {
+            "type": "string",
+            "default": "https://raw.githubusercontent.com/nf-core/test-datasets/",
+            "hidden": true
+        },
+        "config_profile_name": {
+            "type": "string",
+            "hidden": true
+        },
+        "config_profile_description": {
+            "type": "string",
+            "hidden": true
+        },
+        "custom_config_version": {
+            "type": "string",
+            "default": "master",
+            "hidden": true
+        },
+        "custom_config_base": {
+            "type": "string",
+            "default": "https://raw.githubusercontent.com/nf-core/configs/master",
+            "hidden": true
+        },
+        "config_profile_contact": {
+            "type": "string",
+            "hidden": true
+        },
+        "config_profile_url": {
+            "type": "string",
+            "hidden": true
+        },
+        "version": {
+            "type": "boolean",
+            "description": "Display version and exit.",
+            "fa_icon": "fas fa-question-circle",
+            "hidden": true
+        },
+        "validate_params": {
+            "type": "boolean",
+            "description": "Boolean whether to validate parameters against the schema at runtime",
+            "default": true,
+            "fa_icon": "fas fa-check-square",
+            "hidden": true
+        },
+        "trace_report_suffix": {
+            "type": "string",
+            "fa_icon": "far calendar",
+            "description": "Suffix to add to the trace report filename. Default is the date and time in the format yyyy-MM-dd_HH-mm-ss.",
+            "hidden": true
+        }
+    }
+}

@@ -1,0 +1,60 @@
+name: "tracking_with_trackstra"
+description: Cell tracking using Trackastra deep learning model
+keywords:
+  - tracking
+  - cells
+  - time-series
+  - deep-learning
+  - trackastra
+tools:
+  - "trackastra":
+      description: "Deep learning-based cell tracking for microscopy data"
+      homepage: "https://github.com/weecology/trackastra"
+      documentation: "https://trackastra.readthedocs.io/"
+      tool_dev_url: "https://github.com/weecology/trackastra"
+      licence: "['MIT']"
+
+input:
+  - meta:
+      type: map
+      description: |
+        Groovy Map containing sample information
+        e.g. [ id:'test', single_end:false ]
+  - tiff:
+      type: file
+      description: Input time-series images in TIFF format
+      pattern: "*.{tif,tiff}"
+  - tiff_mask:
+      type: file  
+      description: Input segmentation masks in TIFF format
+      pattern: "*.{tif,tiff}"
+
+output:
+  - meta:
+      type: map
+      description: |
+        Groovy Map containing sample information
+        e.g. [ id:'test', single_end:false ]
+  - versions:
+      type: file
+      description: File containing software versions
+      pattern: "versions.yml"
+  - tracked_masks:
+      type: file
+      description: Tracked segmentation masks with cell IDs maintained across time
+      pattern: "*_tracked_masks.tif"
+  - ctc_tracks:
+      type: file
+      description: Cell Tracking Challenge format tracks file
+      pattern: "*_ctc_tracks.txt"
+  - track_graph:
+      type: file
+      description: Pickled tracking graph object (optional)
+      pattern: "*_tracking_graph.pkl"
+  - summary:
+      type: file
+      description: Tracking summary statistics and parameters
+      pattern: "*_tracking_summary.txt"
+
+authors:
+  - "@antoine.buetti"

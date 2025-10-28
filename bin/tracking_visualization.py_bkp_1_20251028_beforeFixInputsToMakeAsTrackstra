@@ -1,0 +1,82 @@
+process TRACKING_VISUALIZATION {
+    tag "$meta.id"
+    label 'process_medium'
+
+    conda "${moduleDir}/environment.yml"
+
+    input:
+    tuple val(meta), path(tiff), path(tiff_mask)
+
+    output:
+    tuple val(meta), path("${meta.id}_tracking_animation.html")   , emit: animation
+    tuple val(meta), path("${meta.id}_trajectories.json")         , emit: trajectories
+    tuple val(meta), path("${meta.id}_intensities.json")          , emit: intensities
+    tuple val(meta), path("${meta.id}_visualization_summary.txt") , emit: summary
+    path "versions.yml"                                           , emit: versions
+
+    when:
+    task.ext.when == null || task.ext.when
+
+    script:
+    def args = task.ext.args ?: ''
+    def prefix = task.ext.prefix ?: "${meta.id}"
+    def channels_to_display = task.ext.channels_to_display ?: [0, 1, 2]
+    def primary_channel = task.ext.primary_channel ?: 1
+    def analysis_channels = task.ext.analysis_channels ?: ['actin_tubulin:1', 'csfe:0']
+    def intensity_scale = task.ext.intensity_scale ?: 0.05
+    def interval = task.ext.interval ?: 200
+
+    // Convert lists to command line arguments
+    def channels_display_args = channels_to_display.collect { "--channels_to_display $it" }.join(' ')
+    def analysis_channels_args = analysis_channels.collect { "--analysis_channels $it" }.join(' ')
+
+    """
+    # Fix matplotlib backend for headless environment
+    export MPLBACKEND=Agg
+
+    python ${projectDir}/bin/tracking_visualization.py \\
+        --original ${tiff} \\
+        --masks ${tiff_mask} \\
+        --prefix ${prefix} \\
+        ${channels_display_args} \\
+        --primary_channel ${primary_channel} \\
+        ${analysis_channels_args} \\
+        --intensity_scale ${intensity_scale} \\
+        --interval ${interval} \\
+        --sample_id ${meta.id} \\
+        ${args}
+
+    cat <<-END_VERSIONS > versions.yml
+    "${task.process}":
+        python: \$(python --version | sed 's/Python //g')
+        matplotlib: \$(python -c "import matplotlib; print(matplotlib.__version__)")
+        numpy: \$(python -c "import numpy; print(numpy.__version__)")
+        scipy: \$(python -c "import scipy; print(scipy.__version__)")
+        tifffile: \$(python -c "import tifffile; print(tifffile.__version__)")
+    END_VERSIONS
+    """
+
+    stub:
+    def args = task.ext.args ?: ''
+    def prefix = task.ext.prefix ?: "${meta.id}"
+    """
+    # Fix matplotlib backend for headless environment
+    export MPLBACKEND=Agg
+
+    touch ${prefix}_tracking_animation.html
+    touch ${prefix}_trajectories.json
+    touch ${prefix}_intensities.json
+    touch ${prefix}_visualization_summary.txt
+
+    echo "stub run" > ${prefix}_visualization_summary.txt
+
+    cat <<-END_VERSIONS > versions.yml
+    "${task.process}":
+        python: \$(python --version | sed 's/Python //g')
+        matplotlib: "stub"
+        numpy: "stub"
+        scipy: "stub"
+        tifffile: "stub"
+    END_VERSIONS
+    """
+}

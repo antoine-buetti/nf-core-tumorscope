@@ -1,0 +1,65 @@
+name: "tracking_visualization"
+description: Create animated visualizations of tracked cells with trajectory and intensity analysis
+keywords:
+  - visualization
+  - tracking
+  - animation
+  - trajectory
+  - intensity-analysis
+  - cells
+tools:
+  - "matplotlib":
+      description: "Python plotting library for creating animations"
+      homepage: "https://matplotlib.org/"
+      documentation: "https://matplotlib.org/stable/contents.html"
+      licence: "['PSF-2.0']"
+  - "scipy":
+      description: "Scientific computing library for Python"
+      homepage: "https://scipy.org/"
+      documentation: "https://docs.scipy.org/"
+      licence: "['BSD-3-Clause']"
+
+input:
+  - meta:
+      type: map
+      description: |
+        Groovy Map containing sample information
+        e.g. [ id:'test', single_end:false ]
+  - original_tiff:
+      type: file
+      description: Original multi-channel time-series images in TIFF format
+      pattern: "*.{tif,tiff}"
+  - tracked_masks:
+      type: file  
+      description: Tracked segmentation masks in TIFF format
+      pattern: "*.{tif,tiff}"
+
+output:
+  - meta:
+      type: map
+      description: |
+        Groovy Map containing sample information
+        e.g. [ id:'test', single_end:false ]
+  - versions:
+      type: file
+      description: File containing software versions
+      pattern: "versions.yml"
+  - animation:
+      type: file
+      description: HTML file containing animated visualization
+      pattern: "*_tracking_animation.html"
+  - trajectories:
+      type: file
+      description: JSON file with cell trajectory data
+      pattern: "*_trajectories.json"
+  - intensities:
+      type: file
+      description: JSON file with cell intensity measurements
+      pattern: "*_intensities.json"
+  - summary:
+      type: file
+      description: Summary text file with analysis statistics
+      pattern: "*_visualization_summary.txt"
+
+authors:
+  - "@antoine-buetti"

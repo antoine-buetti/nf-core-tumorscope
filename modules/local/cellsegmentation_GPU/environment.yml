@@ -1,0 +1,22 @@
+name: cellsegmentation
+channels:
+  - rapidsai  # Add this channel for cuML
+  - conda-forge
+  - bioconda
+  - nvidia    # Add this for CUDA dependencies
+dependencies:
+  - python=3.9
+  - numpy
+  - pillow
+  - opencv
+  - matplotlib
+  - scikit-image
+  - imageio
+  - scipy
+  - scikit-learn
+  - tifffile
+  - tqdm
+  - cuml       # Add cuML for GPU-accelerated ML
+  - cudatoolkit  # Add CUDA toolkit (version will be auto-selected)
+variables:
+  MPLBACKEND: Agg

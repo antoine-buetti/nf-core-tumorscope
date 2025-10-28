@@ -1,0 +1,2 @@
+sample,video,video_mask
+sample1,s3://bucket-antoine-seqera/videos/subset.tif,s3://bucket-antoine-seqera/videos/subset_mask.tif
