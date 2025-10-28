@@ -1,14 +1,7 @@
 /content/nextflow run main.nf \
   --input samplesheet_colab.csv \
+  --channels_to_display "0,1,2" \
+  --analysis_channels "actin_tubulin:1,csfe:0" \
   --outdir ./results \
-  --diameter 45 \
-  --model_type cyto3 \
-  --gpu true \
-  --interval 10 \
-  --green_masking_thr 140 \
-  --spot_sigma 6 \
-  --outline_sigma 2 \
-  --frame_index 1 \
   -profile conda \
   -resume
-
